@@ -1,6 +1,6 @@
 # gpt_stop_there
 
-### hihihihi    
-빅맥지수
-cpi 
-lsbigdataschool
+111111
+222222
+333333
+444444
