@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt    
 
-df = pd.read_csv("project.csv")
+df = pd.read_csv("file/project.csv")
 df
 df.info()
 
@@ -27,7 +27,8 @@ plt.show()
 plt.clf()
 df
 #infla 계산
-adf["infla"] = 0.0
+df["infla"] = 0.0
+
 for i in range(1, len(df)):\
     df.loc[i, "infla"] = ((df.loc[i, "cpi"] - df.loc[i-1, "cpi"]) / df.loc[i-1, "cpi"]) * 100
 df
@@ -57,6 +58,17 @@ extract_income(path3)
 result_frame = pd.DataFrame({})
 for x in path_list:
     result_frame = pd.concat([result_frame, extract_income(x)],ignore_index=True)
+    
 result_frame.rename(columns = {"시점":"year","전체.1":"income"},inplace=True)
-result_frame = result_frame.sort_values("income",ascending=True).reset_index(drop=True)\
-.drop_duplicates(subset = ['year'])
+
+result_frame = result_frame.sort_values("income",ascending=False)\
+.drop_duplicates(subset = ['year'])#keep = first
+result_frame
+result_frame.reset_index(drop=True).drop(4,inplace=True)
+
+result_frame
+#낼 수정하자
+temp_frame = pd.DataFrame({"year":2011,"income":600},index=[13])
+result_frame = pd.concat([result_frame,temp_frame])
+
+#df = pd.merge(df,result_frame,how="left",on="year")
