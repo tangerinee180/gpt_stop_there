@@ -59,22 +59,19 @@ for x in path_list:
     result_frame = pd.concat([result_frame, extract_income(x)],ignore_index=True)
     
 result_frame.rename(columns = {"시점":"year","전체.1":"income"},inplace=True)
-
+result_frame["year"] = result_frame["year"].astype(int)
 result_frame = result_frame.sort_values("income",ascending=False)\
 .drop_duplicates(subset = ['year'])#keep = first --------&&&&&&*^*%^&%
 #질문 : 왜 2011이 살아있을까
 #result_frame = result_frame.sort_values("income",ascending=False) 
 
 result_frame = result_frame.reset_index(drop=True)
-result_frame.drop(3, inplace=True)
 
-result_frame
-result_frame = result_frame.reset_index(drop=True)
 #낼 수정하자
 temp_frame = pd.DataFrame({"year":2011,"income":600},index=[12])
 result_frame = pd.concat([result_frame,temp_frame]).sort_values("income",ascending=True)
 for x in result_frame["year"] :
     print(type(x))
-result_frame["year"] = result_frame["year"].astype(int)
+
 df = pd.merge(df,result_frame,how="left",on="year")
 df
