@@ -77,7 +77,7 @@ for x in df["min_wage"] :
     print(type(x))
 result_frame
 df = pd.merge(df,result_frame,how="left",on="year")
-df = main_frame
+main_frame = df
 #다른 페이지 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 before_frame = pd.read_excel("file/2/최저임금데이터_df.xlsx")
