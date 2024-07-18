@@ -44,7 +44,7 @@ def extract_income(path):
     data.drop(0,inplace=True)
     data.reset_index(drop=True,inplace=True)
     income_data = data[data['항목'] == '가구소득(전년도) 평균 (만원)']
-    result = income_data[['시점', '전체.1']].reset_index(drop=True)
+    result = income_data[['시점', '전체.1']].reset_index(drop=True) # 인덱스 정렬을 위해서 reset_index
     return result
 
 extract_income(path1)
@@ -75,6 +75,65 @@ df = pd.merge(df,result_frame,how="left",on="year")
 
 df.rename(columns = {"income":"first_income"})
 main_frame = df
+
+# 인플레 조정계수 추가
+k=1
+main_frame["infla_adj"]=main_frame["fixed_cpi"][0]
+while k<13:
+    main_frame.loc[k,"infla_adj"]=(main_frame["fixed_cpi"][0]/main_frame["fixed_cpi"][k])
+    k =k +1
+# 실질 최저시급 추가
+main_frame["min_wage"]=main_frame["min_wage"].str.replace(',',"").astype(float) 
+k=1
+main_frame["min_wage_adj"]=main_frame["min_wage"][0]
+while k<13:
+    main_frame.loc[k,"min_wage_adj"]=(main_frame["min_wage"][k] * main_frame["infla_adj"][k])
+    k =k +1
+def up(e,b,c):
+    k=1
+    main_frame[b]=main_frame["min_wage"][0]
+    rename=main_frame[e] #너무길어서 rename으로 바꿈
+    while k<13:
+        main_frame.loc[k,b]=((rename[k] - rename[k-1])/rename[k-1]) * 100
+        k =k +1
+    main_frame.loc[0,b] =0
+    return main_frame[b]
+up("min_wage_adj","min_wage_adj_up",main_frame) # 실질 최저시급 상승률 추가
+up("min_wage","min_wage_up",main_frame) # 최저시급 상승률 추가
+up("fixed_cpi","infla_up",main_frame)   #인플레율 추가 
+'''# 실질 최저시급 상승률 추가
+k=1
+main_frame["min_wage_adj_up"]=main_frame["min_wage"][0]
+rename=main_frame["min_wage_adj"] #너무길어서 rename으로 바꿈
+while k<13:
+    main_frame.loc[k,"min_wage_adj_up"]=((rename[k] - rename[k-1])/rename[k-1]) * 100
+    k =k +1
+main_frame.loc[0,"min_wage_adj_up"] =0
+# 최저시급 상승률 추가
+k=1
+main_frame["min_wage_up"]=main_frame["min_wage"][0]
+rename=main_frame["min_wage"] #너무길어서 rename으로 바꿈
+while k<13:
+    main_frame.loc[k,"min_wage_up"]=((rename[k] - rename[k-1])/rename[k-1]) * 100
+    k =k +1
+main_frame.loc[0,"min_wage_up"] =0
+#인플레율 추가
+k=1
+main_frame["infla_up"]=main_frame["min_wage"][0]
+rename=main_frame["fixed_cpi"] #너무길어서 rename으로 바꿈
+while k<13:
+    main_frame.loc[k,"infla_up"]=((rename[k] - rename[k-1])/rename[k-1]) * 100
+    k =k +1
+main_frame.loc[0,"infla_up"] =0
+'''
+
+
+type(main_frame["min_wage_adj_up"][0])
+
+
+
+
+
 #다른 페이지 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 before_frame = pd.read_excel("file/2/최저임금데이터_df.xlsx")
