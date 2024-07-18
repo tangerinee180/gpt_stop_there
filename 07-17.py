@@ -77,7 +77,7 @@ for x in df["min_wage"] :
     print(type(x))
 result_frame
 df = pd.merge(df,result_frame,how="left",on="year")
-df
+df = "main_frame"
 #다른 페이지 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 before_frame = pd.read_excel("file/2/최저임금데이터_df.xlsx")
@@ -86,26 +86,30 @@ df2 = pd.read_excel(path1)
 df2.columns
 df2.rename(columns = {"Reference area":"country","Unnamed: 3":"dollar_ppp"},inplace=True)
 df2["dollar_ppp"] = df2["dollar_ppp"].astype(float)
-temp_frame2 = df2[["country","dollar_ppp"]] 
+
 names = {
 "United Kingdom": 'UnitedKingdom', 'Türkiye': 'Turkiye', "New Zealand": 'NewZealand'
 }
 df2['country'] = df2['country'].replace(names)
-for x in before_frame['country']:
+for x in ['country']:
     type(x)
+temp_frame2 = df2[["country","dollar_ppp"]]     
 before_frame = pd.merge(before_frame,temp_frame2,how="left",on="country")
-#df2 = df2.rename(index={"United Kingdom": 'UnitedKingdom', 'Türkiye': 'Turkiye', "New Zealand": 'NewZealand'})
-#,inplcae=True index 에는 안돼?
 
 
 df3 = pd.read_excel(path2) 
 df3.columns
 df3.rename(columns = {"Reference area":"country","Unnamed: 4":"exchange_rate"},inplace=True)
-df3 = df3[df3['Transaction']=="Exchange rates, end of period"].reset_index(drop=True)
+df3 = df3[df3['Transaction']=="Exchange rates, average"].reset_index(drop=True)
 df3["exchange_rate"] = df3["exchange_rate"].astype(float)
-#Exchange rates, average
+
+names = {
+"United Kingdom": 'UnitedKingdom', 'Türkiye': 'Turkiye', "New Zealand": 'NewZealand'
+}
+df3['country'] = df3['country'].replace(names)
+
 temp_frame3 = df3[["country","exchange_rate"]]
 before_frame = pd.merge(before_frame,temp_frame3,how="left",on="country")
-before_frame
-    
-    
+before_frame.loc[before_frame['country'] == 'Turkiye', 'exchange_rate'] = 33.1
+oecd = before_frame
+oecd
