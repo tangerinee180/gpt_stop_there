@@ -8,41 +8,34 @@ df.info()
 
 # 변환계수 설정, 2011년 기준으로 변환
 num=df['cpi'][0]/df['cpi'][9]
-df["fixed_cpi"] = df["cpi"]/num
+df["cpi"] = df["cpi"]/num
 df.head()
 
 #compare 열 추가
 df = df.rename(columns = {"food" : "food_cpi"})
-df["Compare"] = np.where(df['cpi']>df["living_cpi"],'small','big')
-#year 값 앞에 두개 자르기
-#필터링
-df_fil=df[df['year']>=2021]
 
-
-df.sort_values(["year"], ascending =[True])
-
-df['fixed_cpi'].plot.bar(rot=0)
-plt.show()
-plt.clf()
-df
-#infla 계산
+#inflation 계산
 df["infla"] = 0.0
 
 for i in range(1, len(df)):\
     df.loc[i, "infla"] = ((df.loc[i, "cpi"] - df.loc[i-1, "cpi"]) / df.loc[i-1, "cpi"]) * 100
+# 
 df
-# df["min_wage"].str.replace(',',"").astype(int) min_wage 숫자 다뤄야하면 사용
+df["min_wage"] = df["min_wage"].str.replace(',',"").astype(int) 
+df
+df["infla_ratio"] =
+#min_wage 숫자 다뤄야하면 사용
 
 #다른 엑셀 데이터들에서 income 추출 후 원 데이터에 병합.
 path1 = "file/1/2012_2017.xlsx"
 path2 = "file/1/2018_2022.xlsx"
 path3 = "file/1/2021_2023.xlsx"
 
-#df2 = pd.read_excel(path1)
-#df2
-#df2.drop(0,inplace=True)
-#df2.reset_index(drop=True,inplace=True)
-#df2.columns
+df2 = pd.read_excel(path1)
+df2
+df2.drop(0,inplace=True)
+df2.reset_index(drop=True,inplace=True)
+df2.columns
 
 path_list = [path1,path2,path3]
 result_frame = pd.DataFrame({})
@@ -66,17 +59,21 @@ result_frame["year"] = result_frame["year"].astype(int)
 result_frame = result_frame.sort_values("income",ascending=False)\
 .drop_duplicates(subset = ['year'])
 
+
 result_frame = result_frame.reset_index(drop=True)
 
 result_frame
-temp_frame = pd.DataFrame({"year":2011,"income":600},index=[12])
-result_frame = pd.concat([result_frame,temp_frame]).sort_values("income",ascending=True)
+temp_frame = pd.DataFrame({"year":2011,"income":630},index=[12])
+result_frame = pd.concat([result_frame,temp_frame]).sort_values("year",ascending=True).reset_index(drop=True)
 for x in result_frame["year"] :
     print(type(x))
 for x in df["min_wage"] :
     print(type(x))
+
 result_frame
 df = pd.merge(df,result_frame,how="left",on="year")
+
+df.rename(columns = {"income":"first_income"})
 main_frame = df
 #다른 페이지 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
@@ -112,4 +109,7 @@ temp_frame3 = df3[["country","exchange_rate"]]
 before_frame = pd.merge(before_frame,temp_frame3,how="left",on="country")
 before_frame.loc[before_frame['country'] == 'Turkiye', 'exchange_rate'] = 33.1
 oecd = before_frame
+#환율/ppp
+oecd["coefficient"] = oecd["exchange_rate"]/oecd["dollar_ppp"]
+oecd["real_wage"] = oecd["min_wage"]*oecd["coefficient"]
 oecd
