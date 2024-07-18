@@ -23,22 +23,19 @@ cpi_2015.drop(index=np.arange(109,115),inplace=True)
 cpi=pd.concat([cpi_2011,cpi_2015],axis=0,ignore_index=True)
 ########
  시점 = 연도/ 월 분리
-cpi[['year','month']]=cpi['date'].str.split('.') #expand=True
-cpi['date']=pd.to_datetime(cpi['date'])
-cpi['year']=cpi['date'].dt.year
-cpi['month']=cpi['date'].dt.month
+#cpi[['year','month']]=cpi['date'].str.split('.') #expand=True
+#cpi['date']=pd.to_datetime(cpi['date'])
+#cpi['year']=cpi['date'].dt.year
+#cpi['month']=cpi['date'].dt.month
 #date 칼럼 삭제
-cpi.drop(columns='date',inplace=True)
-#######
+#cpi.drop(columns='date',inplace=True)
+##################
 
 #그래프
 plt.figure(figsize=(30,25))
 plt.plot(cpi['date'],cpi['CPI'])
-#plt.xticks(ticks=[0,12,24,34,102,106], labels=['2022.01','2012.01','2013.01','2013-11','2019.07','2019.11'])
-#plt.yticks(ticks=[0,12,24,34,102,106], labels=[cpi['CPI'][0],cpi['CPI'][12],cpi['CPI'][24],cpi['CPI'][34],cpi['CPI'][102],cpi['CPI'][106]])
-
-
-
+plt.xticks(ticks=[0,12,24,34,102,106], labels=['2022.01','2012.01','2013.01','2013-11','2019.07','2019.11'])
+plt.yticks(ticks=[0,12,24,34,102,106], labels=[cpi['CPI'][0],cpi['CPI'][12],cpi['CPI'][24],cpi['CPI'][34],cpi['CPI'][102],cpi['CPI'][106]])
 
 plt.xlabel('year.month')
 plt.ylabel('cpi')
