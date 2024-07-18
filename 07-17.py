@@ -31,16 +31,19 @@ df["infla"] = 0.0
 for i in range(1, len(df)):\
     df.loc[i, "infla"] = ((df.loc[i, "cpi"] - df.loc[i-1, "cpi"]) / df.loc[i-1, "cpi"]) * 100
 df
+# df["min_wage"].str.replace(',',"").astype(int) min_wage 숫자 다뤄야하면 사용
 
-path1 = "file/2012_2017.xlsx"
-path2 = "file/2018_2022.xlsx"
-path3 = "file/2021_2023.xlsx"
+#다른 엑셀 데이터들에서 income 추출 후 원 데이터에 병합.
+path1 = "file/1/2012_2017.xlsx"
+path2 = "file/1/2018_2022.xlsx"
+path3 = "file/1/2021_2023.xlsx"
 
 #df2 = pd.read_excel(path1)
 #df2
 #df2.drop(0,inplace=True)
 #df2.reset_index(drop=True,inplace=True)
 #df2.columns
+
 path_list = [path1,path2,path3]
 result_frame = pd.DataFrame({})
 def extract_income(path):
@@ -57,21 +60,52 @@ extract_income(path3)
 result_frame = pd.DataFrame({})
 for x in path_list:
     result_frame = pd.concat([result_frame, extract_income(x)],ignore_index=True)
-    
+
 result_frame.rename(columns = {"시점":"year","전체.1":"income"},inplace=True)
 result_frame["year"] = result_frame["year"].astype(int)
 result_frame = result_frame.sort_values("income",ascending=False)\
-.drop_duplicates(subset = ['year'])#keep = first --------&&&&&&*^*%^&%
-#질문 : 왜 2011이 살아있을까
-#result_frame = result_frame.sort_values("income",ascending=False) 
+.drop_duplicates(subset = ['year'])
 
 result_frame = result_frame.reset_index(drop=True)
 
-#낼 수정하자
+result_frame
 temp_frame = pd.DataFrame({"year":2011,"income":600},index=[12])
 result_frame = pd.concat([result_frame,temp_frame]).sort_values("income",ascending=True)
 for x in result_frame["year"] :
     print(type(x))
-
+for x in df["min_wage"] :
+    print(type(x))
+result_frame
 df = pd.merge(df,result_frame,how="left",on="year")
 df
+#다른 페이지 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+before_frame = pd.read_excel("file/2/최저임금데이터_df.xlsx")
+path1, path2 = ["file/2/PPP원데이터_df.xlsx","file/2/환율원데이터_df.xlsx"]
+df2 = pd.read_excel(path1) 
+df2.columns
+df2.rename(columns = {"Reference area":"country","Unnamed: 3":"dollar_ppp"},inplace=True)
+df2["dollar_ppp"] = df2["dollar_ppp"].astype(float)
+temp_frame2 = df2[["country","dollar_ppp"]] 
+names = {
+"United Kingdom": 'UnitedKingdom', 'Türkiye': 'Turkiye', "New Zealand": 'NewZealand'
+}
+df2['country'] = df2['country'].replace(names)
+for x in before_frame['country']:
+    type(x)
+before_frame = pd.merge(before_frame,temp_frame2,how="left",on="country")
+#df2 = df2.rename(index={"United Kingdom": 'UnitedKingdom', 'Türkiye': 'Turkiye', "New Zealand": 'NewZealand'})
+#,inplcae=True index 에는 안돼?
+
+
+df3 = pd.read_excel(path2) 
+df3.columns
+df3.rename(columns = {"Reference area":"country","Unnamed: 4":"exchange_rate"},inplace=True)
+df3 = df3[df3['Transaction']=="Exchange rates, end of period"].reset_index(drop=True)
+df3["exchange_rate"] = df3["exchange_rate"].astype(float)
+#Exchange rates, average
+temp_frame3 = df3[["country","exchange_rate"]]
+before_frame = pd.merge(before_frame,temp_frame3,how="left",on="country")
+before_frame
+    
+    
