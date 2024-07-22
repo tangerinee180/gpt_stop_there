@@ -23,7 +23,7 @@ for i in range(1, len(df)):\
 df
 df["min_wage"] = df["min_wage"].str.replace(',',"").astype(int) 
 df
-df["infla_ratio"] =
+
 #min_wage 숫자 다뤄야하면 사용
 
 #다른 엑셀 데이터들에서 income 추출 후 원 데이터에 병합.
@@ -75,7 +75,7 @@ df = pd.merge(df,result_frame,how="left",on="year")
 
 df.rename(columns = {"income":"first_income"})
 main_frame = df
-
+"""
 # 인플레 조정계수 추가
 k=1
 main_frame["infla_adj"]=main_frame["fixed_cpi"][0]
@@ -129,7 +129,7 @@ main_frame.loc[0,"infla_up"] =0
 
 
 type(main_frame["min_wage_adj_up"][0])
-
+"""
 
 
 
