@@ -172,3 +172,4 @@ before_frame = pd.merge(before_frame,temp_frame3,how="left",on="country")
 before_frame.loc[before_frame['country'] == 'Turkiye', 'exchange_rate'] = 33.1
 oecd = before_frame
 oecd
+new
