@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 df = pd.read_excel("file/cpi_2011to2023.xlsx")
-df.head
+df.head()
 
 df.rename(columns = {'시점':"year","전국" : "cpi"\
 ,"전국.2":"food_cpi"},inplace=True)
@@ -24,10 +24,8 @@ df["year"] = df["year"].astype(int)
 #cpi 2011기준으로 변환
 cpi_coefficent=df['cpi'][0]/df['cpi'][9]
 food_coefficent=df['food_cpi'][0]/df['food_cpi'][9]
-
 df["cpi"] = df["cpi"]/cpi_coefficent
 df["food_cpi"] = df["food_cpi"]/food_coefficent
-
 df.head()
 
 
@@ -66,59 +64,8 @@ plt.show()
 #인플레 조정 계수
 infla_adj = np.array(100/df['cpi'])
 
-<<<<<<< HEAD
-result_frame.rename(columns = {"시점":"year","전체.1":"income"},inplace=True)
-result_frame["year"] = result_frame["year"].astype(int)
-result_frame = result_frame.sort_values("income",ascending=False)\
-.drop_duplicates(subset = ['year'])
-
-result_frame = result_frame.reset_index(drop=True)
-
-result_frame
-temp_frame = pd.DataFrame({"year":2011,"income":600},index=[12])
-result_frame = pd.concat([result_frame,temp_frame]).sort_values("income",ascending=True)
-for x in result_frame["year"] :
-    print(type(x))
-for x in df["min_wage"] :
-    print(type(x))
-result_frame
-df = pd.merge(df,result_frame,how="left",on="year")
-main_frame = df
-
-# 인플레 조정계수 추가
-k=1
-main_frame["infla_adj"]=main_frame["fixed_cpi"][0]
-while k<13:
-    main_frame.loc[k,"infla_adj"]=(main_frame["fixed_cpi"][0]/main_frame["fixed_cpi"][k])
-    k =k +1
-# 실질 최저시급 추가
-main_frame["min_wage"]=main_frame["min_wage"].str.replace(',',"").astype(float) 
-k=1
-main_frame["min_wage_adj"]=main_frame["min_wage"][0]
-while k<13:
-    main_frame.loc[k,"min_wage_adj"]=(main_frame["min_wage"][k] * main_frame["infla_adj"][k])
-    k =k +1
-def up(e,b,c):
-    k=1
-    main_frame[b]=main_frame["min_wage"][0]
-    rename=main_frame[e] #너무길어서 rename으로 바꿈
-    while k<13:
-        main_frame.loc[k,b]=((rename[k] - rename[k-1])/rename[k-1]) * 100
-        k =k +1
-    main_frame.loc[0,b] =0
-    return main_frame[b]
-up("min_wage_adj","min_wage_adj_up",main_frame) # 실질 최저시급 상승률 추가
-up("min_wage","min_wage_up",main_frame) # 최저시급 상승률 추가
-up("fixed_cpi","infla_up",main_frame)   #인플레율 추가 
-
-'''
-
-
-type(main_frame["min_wage_adj_up"][0])
-=======
 df['real_wage'] = (df['min_wage'] / df['cpi']) * 100
 df['real_wage'] = df['real_wage'].astype(int)
->>>>>>> 0eec38683e11ac0e825e35077981189035d3bffd
 
 df["real_wage_roc"] = 0
 for i in range(1, len(df)):\
@@ -170,9 +117,6 @@ df3.rename(columns = {"Reference area":"country","Unnamed: 4":"exchange_rate"},i
 df3 = df3[df3['Transaction']=="Exchange rates, average"].reset_index(drop=True)
 df3["exchange_rate"] = df3["exchange_rate"].astype(float)
 
-names = {
-"United Kingdom": 'UnitedKingdom', 'Türkiye': 'Turkiye', "New Zealand": 'NewZealand'
-}
 df3['country'] = df3['country'].replace(names)
 
 temp_frame3 = df3[["country","exchange_rate"]]
@@ -183,31 +127,7 @@ oecd = before_frame
 oecd["coefficient"] = oecd["exchange_rate"]/oecd["dollar_ppp"]
 oecd["real_wage"] = oecd["min_wage"]*oecd["coefficient"]
 
-oecd
-<<<<<<< HEAD
-new
-=======
-
-
-
-#bar 그래프 == 
-oecd
-
-bar_colors = np.where(df["country"]=="Korea","red",np.where(df["country"]=="mean","green","blue"))
-bar_colors = ['red' if country == 'Korea' else 'blue' for country in oecd['country']]
-#리스트 컴프리핸션 구문 순서
-
-plt.figure(figsize=(14, 8))
-sns.barplot(data=oecd.sort_values("real_wage",ascending=True), \
-x='country', y='real_wage', palette=bar_colors)
-
-plt.xticks(rotation=45, ha='right', fontsize=6)  # 글씨 크기와 회전 각도 조정
-plt.xlabel('Country', fontsize=12)  # 축 제목 글씨 크기 조정
-plt.ylabel('Real Wage', fontsize=12)  # 축 제목 글씨 크기 조정
-plt.title('Real Wage by Country (Bar Plot)', fontsize=14)  # 제목 글씨 크기 조정
-plt.show()
-
-
+oecd.head()
 
 
 ### mean 값 추가 bar
@@ -231,5 +151,3 @@ plt.ylabel('Real Wage', fontsize=12)  # 축 제목 글씨 크기 조정
 plt.title('Real Wage by Country (Bar Plot)', fontsize=14)  # 제목 글씨 크기 조정
 plt.subplots_adjust(bottom=0.2) # 하단 레이블 간격 조정
 plt.show()
-
->>>>>>> 0eec38683e11ac0e825e35077981189035d3bffd
