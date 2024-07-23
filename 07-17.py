@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 df = pd.read_excel("file/cpi_2011to2023.xlsx")
-df.head
+df.head()
 
 df.rename(columns = {'시점':"year","전국" : "cpi"\
 ,"전국.2":"food_cpi"},inplace=True)
@@ -24,10 +24,8 @@ df["year"] = df["year"].astype(int)
 #cpi 2011기준으로 변환
 cpi_coefficent=df['cpi'][0]/df['cpi'][9]
 food_coefficent=df['food_cpi'][0]/df['food_cpi'][9]
-
 df["cpi"] = df["cpi"]/cpi_coefficent
 df["food_cpi"] = df["food_cpi"]/food_coefficent
-
 df.head()
 
 
@@ -119,9 +117,6 @@ df3.rename(columns = {"Reference area":"country","Unnamed: 4":"exchange_rate"},i
 df3 = df3[df3['Transaction']=="Exchange rates, average"].reset_index(drop=True)
 df3["exchange_rate"] = df3["exchange_rate"].astype(float)
 
-names = {
-"United Kingdom": 'UnitedKingdom', 'Türkiye': 'Turkiye', "New Zealand": 'NewZealand'
-}
 df3['country'] = df3['country'].replace(names)
 
 temp_frame3 = df3[["country","exchange_rate"]]
@@ -132,28 +127,7 @@ oecd = before_frame
 oecd["coefficient"] = oecd["exchange_rate"]/oecd["dollar_ppp"]
 oecd["real_wage"] = oecd["min_wage"]*oecd["coefficient"]
 
-oecd
-
-
-
-#bar 그래프 == 
-oecd
-
-bar_colors = np.where(df["country"]=="Korea","red",np.where(df["country"]=="mean","green","blue"))
-bar_colors = ['red' if country == 'Korea' else 'blue' for country in oecd['country']]
-#리스트 컴프리핸션 구문 순서
-
-plt.figure(figsize=(14, 8))
-sns.barplot(data=oecd.sort_values("real_wage",ascending=True), \
-x='country', y='real_wage', palette=bar_colors)
-
-plt.xticks(rotation=45, ha='right', fontsize=6)  # 글씨 크기와 회전 각도 조정
-plt.xlabel('Country', fontsize=12)  # 축 제목 글씨 크기 조정
-plt.ylabel('Real Wage', fontsize=12)  # 축 제목 글씨 크기 조정
-plt.title('Real Wage by Country (Bar Plot)', fontsize=14)  # 제목 글씨 크기 조정
-plt.show()
-
-
+oecd.head()
 
 
 ### mean 값 추가 bar
@@ -177,4 +151,3 @@ plt.ylabel('Real Wage', fontsize=12)  # 축 제목 글씨 크기 조정
 plt.title('Real Wage by Country (Bar Plot)', fontsize=14)  # 제목 글씨 크기 조정
 plt.subplots_adjust(bottom=0.2) # 하단 레이블 간격 조정
 plt.show()
-

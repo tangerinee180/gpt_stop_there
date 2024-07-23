@@ -17,8 +17,8 @@ sns.lineplot(data=intro, x='year', y='임금수준전망',color='red',label='임
 plt.xlabel('Year')
 plt.ylabel('Percentage(%)')
 
-plt.legend()
 plt.grid()
+plt.legend()
 plt.show()
 
 
@@ -89,7 +89,8 @@ plt.show()
 #인플레 조정 계수
 infla_adj = np.array(100/df['cpi'])
 
-df['real_wage'] = (df['min_wage'] / df['cpi']) * 100
+df['real_wage'] = df['min_wage'] * infla_adj
+
 df['real_wage'] = df['real_wage'].astype(int)
 
 df["real_wage_roc"] = 0
@@ -172,7 +173,7 @@ sns.barplot(data=oecd1.sort_values("real_wage",ascending=True), \
 x='country', y='real_wage', palette=bar_colors)
 show_country_label = [0,3,7,9,11,13,14,16,18,20,22,24,27]
 show_country = ['Mexico', 'Hungary', 'United States', 'Poland', 'Portugal', 'Mean',\
-'Japan', 'Korea', 'Canada', 'Spain', 'United Kingdom', 'Germany', 'France',]
+'Japan', 'Korea', 'Canada', 'Spain', 'United Kingdom', 'Germany', 'France']
 plt.xticks(rotation=45, ha='right', fontsize=6, ticks = show_country_label,labels =show_country )  # 글씨 크기와 회전 각도 조정
 plt.xlabel('Country', fontsize=12)  # 축 제목 글씨 크기 조정
 plt.ylabel('Real Wage', fontsize=12)  # 축 제목 글씨 크기 조정

@@ -1,25 +1,384 @@
 ---
-title: "Gpt stop there"
+title: "Gpt-stop-there project1"
 jupyter: python3
 ---
 
-##서론 데이터
+### 서론
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt    
+import seaborn as sns
+
+plt.rcParams.update({"figure.dpi": 150,
+                     "figure.figsize": [8, 6],
+                     "font.size": 11,
+                     "font.family": "Malgun Gothic"})
+
+intro = pd.read_excel("file/소비자동향조사.xlsx")
+plt.figure(figsize = [5.5,4])
+intro["year"]
+sns.lineplot(data=intro, x='year', y='임금수준전망', color='dodgerblue', label='임금수준전망', marker='o')
+sns.lineplot(data=intro, x='year', y='향후경기전망', color='salmon', label='향후경기전망', marker='o')
+sns.lineplot(data=intro, x='year', y='현재경기판단', color='red', label='현재경기판단', marker='o')
+plt.xlabel('Year',fontsize=14)
+plt.ylabel('Percentage(%)',fontsize=14)
+plt.title("소비자동향조사")
+plt.legend(loc = "lower right")
+plt.grid()
+plt.show()
+```
+
+**소비자동향조사에 따르면, 소비자들은 경기를 부정적으로 판단하고 있는데, 그에 반해 임금 수준은 상승할 것이라고 예상한다. 그렇다면 임금은 정말 지속적으로 상승했는지, 소비자들이 임금 상승의 수혜를 제대로 받고 있는지 알아보기 위해 최저임금 데이터를 바탕으로 분석을 진행하였다. **
+
+### 우리가 사용한 데이터와 수치들
+![](./1.PNG)
+![](./2.PNG)
+![](./3.PNG)
+
+### **CPI: 소비자물가지수란?**
+
+***
+![](./CPI.PNG)
+
+CPI(소비자 물가 지수) :
+소비자들이 일상 생활에서 구매하는 상품과 서비스의 가격 변동을 측정하는 지표이다. 그 측정을 위해 다양한 소비자 Basket을 사용하며, 일반적인 CPI의 Basket엔 식품, 주택, 의류, 교통, 교육, 의료 등 모든 상품과 서비스가 포함된다. 예시로 식품 물가 지수의 Basket 안엔 음식만 들어가있다고 보면 된다.
+
+# Main
+## CPI(소비자 물가 지수) 
+
+* 데이터 파일 읽어오기
+```{python}
+df = pd.read_excel("file/cpi_2011to2023.xlsx")
+df.head()
+```
+
+* 컬럼명 변경, 행 제거, 특정 컬럼 추출
+```{python}
+df.rename(columns = {'시점':"year","전국" : "cpi","전국.2":"food_cpi"},inplace=True)
+df.drop(0,inplace=True) 
+df=df[['year','cpi','food_cpi']]
+df.reset_index(drop=True,inplace=True)
+```
+* **inplace = True**                
+df.drop(0,inplace=True) 와 df = df.drop(0) 같은 의미이다.
+
+* **reset_index(drop=True)**                
+인덱스 번호를 초기화하는 함수로 drop=True 해야 전 인덱스 번호가 사라진다.
+
+
+* 최저시급 열 추가
+```{python}
+list = ["4,320","4,580","4,860","5,210","5,580","6,030","6,470",\
+        "7,530","8,350","8,590","8,720","9,160","9,620"]
+df['min_wage'] = np.array(list)
+df = df[['year',"min_wage", 'cpi', 'food_cpi']]
+df.head()
+```
+
+* 최저시급과 연도 컬럼 정수형으로 변경
+```{python}
+type(df["min_wage"][0])
+type(df["year"][0])
+df["min_wage"] = df["min_wage"].str.replace(',',"").astype(int) 
+df["year"] = df["year"].astype(int) 
+type(df["min_wage"][0])
+type(df["year"][0])
+```
 
 ```{python}
-1 + 1
+df
+```
+
+* 소비자 물가 지수 기준을 2011년으로 변환
+```{python}
+cpi_coefficent=df['cpi'][0]/df['cpi'][9]
+food_coefficent=df['food_cpi'][0]/df['food_cpi'][9]
+df["cpi"] = df["cpi"]/cpi_coefficent
+df["food_cpi"] = df["food_cpi"]/food_coefficent
+df.head()
+```
+
+### 인플레이션
+**우리가 흔히 알고 있는 인플레이션율이란 물가 상승률로, CPI의 변화율로 측정할 수 있다. 일반적인 국가에선 물가는 지속적으로 상승하기 때문에 인플레이션은 대부분 양수로 나타난다.**
+
+![](./inflation.PNG)
+
+* 인플레이션 계산 
+```{python}
+df["inflation"] = 0.0
+
+for i in range(1, len(df)):
+    df.loc[i, "inflation"] = ((df.loc[i, "cpi"] - df.loc[i-1, "cpi"])\
+    /df.loc[i-1, "cpi"]) * 100
+df.head()
+```
+
+* 식품 인플레이션 계산
+```{python}
+#| messeage: false
+#| warning: false #furture warning 에러창 뜨지 않게 하기기
+df['food_inflation'] = 0
+for i in range(1, len(df)):\
+    df.loc[i, "food_inflation"] = ((df.loc[i, "food_cpi"] - df.loc[i-1, "food_cpi"])\
+   /df.loc[i-1, "food_cpi"]) * 100
+df['food_inflation'] = df['food_inflation'].fillna(0)
+df.head()
+```
+
+### 인플레이션, 식품 인플레이션 비교 그래프
+```{python}
+plt.clf()
+plt.figure(figsize=(5.5,4))
+sns.lineplot(data=df, x='year', y='food_inflation',color='red' ,label='식품 인플레이션', marker='o')
+sns.lineplot(data=df, x='year', y='inflation',color='dodgerblue',label='인플레이션', marker='o')
+# 레이블과 제목 설정
+plt.xlabel('Year',fontsize=16)
+plt.ylabel('Percentage(%)',fontsize=16)
+plt.title('소비자 물가지수와 식품 물가지수의 상승률 비교')
+plt.legend()
+# 그래프 표시
+plt.show()
+```
+
+**실제 소비자가 체감하는 물가상승률이 더 크다.**
+
+
+
+**실질적인 최저 시급을 구하기 위해서 인플레이션 조정계수를 구한후 최저 시급에 곱했다. 인플레이션 조정 계수를 곱함으로써 물가의 영향을 제거할 수 있다.**
+
+* 최저시급, 실질 최저시급 상승률 
+```{python}
+#| messeage: false
+#| warning: false 
+
+infla_coefficient = np.array(100/df['cpi'])
+
+df['real_wage'] = df['min_wage'] * infla_coefficient
+df['real_wage'] = df['real_wage'].astype(int)
+
+df["real_wage_roc"] = 0
+for i in range(1, len(df)):
+    df.loc[i, "real_wage_roc"] = ((df.loc[i, "real_wage"] - df.loc[i-1, "real_wage"])\
+   /df.loc[i-1, "real_wage"]) * 100
+
+df["min_wage_roc"] = 0
+for i in range(1, len(df)):
+    df.loc[i, "min_wage_roc"] = ((df.loc[i, "min_wage"] - df.loc[i-1, "min_wage"])\
+   /df.loc[i-1, "min_wage"]) * 100
+
+df = df[['year', 'min_wage','real_wage',"min_wage_roc","real_wage_roc",\
+         'cpi', 'food_cpi', 'inflation', 'food_inflation']]
+df.head()
+```
+
+### 최저시급/ 실질 최저시급 상승률 비교 
+```{python}
+
+plt.figure(figsize=(5.5,4))
+sns.lineplot(data=df,x='year',y='min_wage_roc',color='red',label=' 최저시급 변화율',marker='o')
+sns.lineplot(data=df,x='year',y='real_wage_roc',color='dodgerblue',label='실질 최저시급 변화율',marker='o')
+# 레이블과 제목 설정
+plt.xlabel('Year',fontsize=16)
+plt.ylabel('Percentage(%)',fontsize=16)
+plt.ylim(-2, 17)
+plt.grid()
+plt.title('최저시급과 실질 최저시급의 변화율 비교')
+plt.legend()
+plt.show()
+```
+**"실질 최저시급"의 상승률이 모든 연도에서 최저시급의 상승률보다 낮다.**
+**또한 2021 ~ 2022년도 같은 경우 최저 시급이 상승했음에도 실질 최저 시급이 하락했다.**
+
+
+***
+### 한국의 최저임금이 OECD의 다른 나라와 비교하면 어떨까?
+**OECD별 최저 시급 데이터가 있지만, 각 나라의 물가가 반영이 안 된 지표이기에  환율과 PPP 데이터를 사용하였다.**
+
+### PPP란?
+**PPP는 구매력 평가라는 뜻으로, 실질 구매력을 나타내는 지표이다.**
+**예를 들어 한국의 dollar PPP는 미국에서 1달러를 가지고 살 수 있는 상품을 한국에서 살 때 드는 금액으로 정의할 수 있다.**
+
+
+## OECD 국가 별 최저시급
+* 칼럼 확인
+```{python}
+before_frame = pd.read_excel("file/2/최저임금데이터_df.xlsx")
+path1, path2 = ["file/2/PPP원데이터_df.xlsx","file/2/환율원데이터_df.xlsx"]
+df2 = pd.read_excel(path1) 
+df2.columns
+```
+
+* 추가 데이터 병합 및 열 지정 (1)
+```{python}
+df2.rename(columns = {"Reference area":"country","Unnamed: 3":"dollar_ppp"},inplace=True)
+df2["dollar_ppp"] = df2["dollar_ppp"].astype(float)
+
+names = {
+"United Kingdom": 'UnitedKingdom', 'Türkiye': 'Turkiye', "New Zealand": 'NewZealand'
+}
+df2['country'] = df2['country'].replace(names)
+
+temp_frame2 = df2[["country","dollar_ppp"]]     
+before_frame = pd.merge(before_frame,temp_frame2,how="left",on="country")
+before_frame.head()
+```
+
+* 추가 데이터 병합 및 열 지정 (2)
+```{python}
+
+df3 = pd.read_excel(path2) 
+df3.rename(columns = {"Reference area":"country","Unnamed: 4":"exchange_rate"},inplace=True)
+df3 = df3[df3['Transaction']=="Exchange rates, average"].reset_index(drop=True)
+df3["exchange_rate"] = df3["exchange_rate"].astype(float)
+
+df3['country'] = df3['country'].replace(names)
+
+temp_frame3 = df3[["country","exchange_rate"]]
+oecd = pd.merge(before_frame,temp_frame3,how="left",on="country")
+oecd.loc[oecd['country'] == 'Turkiye', 'exchange_rate'] = 33.1
+oecd.head()
 ```
 
 
-## df 페이지
+* **다른 나라와 한국의 실질 최저 임금을 비교하기 위해서 (환율/PPP)를 변환 계수로 사용해 최저시급 (달러)에 곱하여, 각 나라 간 비교할 수 있는 실질 임금 지표를 만들었다.**
+
+* 환율/ PPP 열 추가
 ```{python}
+oecd["coefficient"] = oecd["exchange_rate"]/oecd["dollar_ppp"]
+oecd["real_wage"] = oecd["min_wage"]*oecd["coefficient"]
+
+oecd.head()
+```
+
+* OECD 국가별 최저임금 비교 
+```{python}
+#| messeage: false
+#| warning: false 
+oecd = oecd.sort_values("real_wage",ascending=True).reset_index(drop=True)
+plt.clf()
+plt.figure(figsize=(8,4))
+bar_colors = np.where(oecd["country"]=="Korea","red","dodgerblue")
+sns.barplot(data=oecd.sort_values("real_wage",ascending=True), \
+x='country', y='real_wage', palette=bar_colors)
+
+plt.xticks(rotation=45, fontsize=6)  # 글씨 크기와 회전 각도 조정
+plt.yticks(fontsize=12)
+plt.xlabel('Country',fontsize=14)  # 축 제목 글씨 크기 조정
+plt.ylabel('Real Wage',fontsize=14)  # 축 제목 글씨 크기 조정
+plt.title('OECD 국가별 실질 최저임금', fontsize=20)  # 제목 글씨 크기 조정
+plt.legend()
+plt.show()
+```
+
+* **상대적인 비교를 위해 OECD 실질 임금의 평균을 구하여 그래프에 추가하는 작업을 진행하였다.**
+
+
+
+### OECD 평균 임금 추가한 그래프
+
+```{python}
+#| messeage: false
+#| warning: false 
+
+mean1 = oecd["real_wage"].mean()
+#country 에 평균 임금을 추가.
+frame = pd.DataFrame({"country":'Mean',"real_wage":mean1},index=[0])
+oecd1 = pd.concat([oecd,frame])
+oecd1 = oecd1.sort_values("real_wage",ascending=True).reset_index(drop=True)
 
 ```
 
-## oecd 페이지
+* 
 ```{python}
+#| messeage: false
+#| warning: false 
+#| eval: false
+#Mean,Korea 색 다르게 하기
+bar_colors = np.where(oecd1["country"]=="Korea","red",np.where(oecd1["country"]=="Mean","seagreen","dodgerblue"))
 
+sns.barplot(data=oecd1.sort_values("real_wage",ascending=True),\
+x='country', y='real_wage', palette=bar_colors)
+
+plt.xlabel('Country',fontsize=14)  # 축 제목 글씨 크기 조정
+plt.ylabel('Real Wage',fontsize=14)  # 축 제목 글씨 크기 조정
+plt.title('OECD 주요국가별 실질 최저임금', fontsize=20)  # 제목 글씨 크기 조정
+```
+
+*
+```{python}
+oecd1["country"]
+```
+
+*
+```{python}
+#| messeage: false
+#| warning: false 
+#| eval: false
+show_country_label = [0,3,7,9,11,13,14,16,18,20,22,24,27]
+
+show_country = ['Mexico', 'Hungary', 'United States', 'Poland', 'Portugal', 'Mean','Japan', 'Korea', 'Canada', 'Spain',\
+'United Kingdom', 'Germany', 'France']
+
+plt.xticks(rotation=45, fontsize=10, ticks = show_country_label,labels =show_country )  # 글씨 크기와 회전 각도 조정
+plt.yticks(fontsize=12)
+
+plt.show()
 ```
 
 
 
+## OECD 주요 국가의 평균 실질 임금 그래프
 
+```{python}
+#| messeage: false
+#| warning: false 
+
+mean1 = oecd["real_wage"].mean()
+frame = pd.DataFrame({"country":'Mean',"real_wage":mean1},index=[0])
+oecd1 = pd.concat([oecd,frame])
+oecd1 = oecd1.sort_values("real_wage",ascending=True).reset_index(drop=True)
+plt.figure(figsize=(5.5,4))
+
+bar_colors = np.where(oecd1["country"]=="Korea","red",np.where(oecd1["country"]=="Mean","seagreen","dodgerblue"))
+
+sns.barplot(data=oecd1.sort_values("real_wage",ascending=True),\
+x='country', y='real_wage', palette=bar_colors)
+
+plt.xlabel('Country',fontsize=14)  # 축 제목 글씨 크기 조정
+plt.ylabel('Real Wage',fontsize=14)  # 축 제목 글씨 크기 조정
+plt.title('OECD 주요국가별 실질 최저임금', fontsize=20)  # 제목 글씨 크기 조정
+show_country_label = [0,3,7,9,11,13,14,16,18,20,22,24,27]
+
+show_country = ['Mexico', 'Hungary', 'United States', 'Poland', 'Portugal', 'Mean','Japan', 'Korea', 'Canada', 'Spain',\
+'United Kingdom', 'Germany', 'France']
+
+plt.xticks(rotation=45, fontsize=10, ticks = show_country_label,labels =show_country )  # 글씨 크기와 회전 각도 조정
+plt.yticks(fontsize=12)
+
+plt.show()
+
+```
+
+* **우리나라의 실질 최저 임금이 OECD 평균보다 높다는 것으로, 한국의 최저 임금이 타 국가들과 비교해서 높은 편인 것을 알 수 있다. **
+
+
+***     
+# **결론**
+
+1) 인플레이션의 영향으로 최저시급 상승률에 비해 실질 최저시급 상승률이 낮다.              
+(최저 임금을 인상하는 만큼 그대로 소비자에게 전달되지 않는다.)
+
+2) 실질 물가 상승은 일반 소비자에게 더 크게 다가온다.               
+
+(Food CPI 예를 들면서 물가 상승시, 음식과 같은 필수재들의 물가는 소비자들에게 더 크게 다가올 수 있다.)
+
+3) 우리나라의 최저 임금은 OECD 내에서도 평균 이상이기 때문에, 최저임금의 대폭 인상은 바람직하지 않다.
+
+
+
+
+
+**최저 시급의 대폭 인상은 인플레이션과 고용시장에의 부정적 영향 등의 부작용을 동반한다.**               
+
+**최저임금 상승의 목적인 근로자의 소득 수준 상승과 그에 따른 소비 여력의 증가로 인한 경제 활성화는 노동, 복지 등의 다른 관점에서 접근하는 것이 유리할 수 있다.**
