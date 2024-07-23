@@ -26,5 +26,12 @@
     "title": "Gpt stop there",
     "section": "oecd 페이지",
     "text": "oecd 페이지"
+  },
+  {
+    "objectID": "test.html",
+    "href": "test.html",
+    "title": "Untitled",
+    "section": "",
+    "text": "import pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt    \nimport seaborn as sns\n\nplt.rcParams.update({\"figure.dpi\": 150,\n                     \"figure.figsize\": [8, 6],\n                     \"font.size\": 12,\n                     \"font.family\": \"Malgun Gothic\"})\n###서론\nintro = pd.read_excel(\"file/소비자동향조사.xlsx\")\nplt.figure(figsize = [6,4])\nintro[\"year\"]\nsns.lineplot(data=intro, x='year', y='현재경기판단',color='green',label='현재경기판단', marker='o')\nsns.lineplot(data=intro,x='year', y='향후경기전망',color='blue',label='향후경기전망', marker='o')\nsns.lineplot(data=intro, x='year', y='임금수준전망',color='red',label='임금수준전망', marker='o')\nplt.xlabel('Year')\nplt.ylabel('Percentage(%)')\n\nplt.legend()\nplt.grid()\nplt.show()\n\n\n\n\n\n\n\n\nWhen you click the Rend\ner button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n\n2\n\n\nYou can add options to executable code like this\n\n\n4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
   }
 ]
