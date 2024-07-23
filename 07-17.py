@@ -177,3 +177,4 @@ plt.ylabel('Real Wage', fontsize=12)  # 축 제목 글씨 크기 조정
 plt.title('Real Wage by Country (Bar Plot)', fontsize=14)  # 제목 글씨 크기 조정
 plt.subplots_adjust(bottom=0.2) # 하단 레이블 간격 조정
 plt.show()
+..
