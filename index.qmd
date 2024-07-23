@@ -1,12 +1,25 @@
 ---
-title: "avd"
+title: "Gpt stop there"
 jupyter: python3
 ---
 
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+##서론 데이터
 
 ```{python}
 1 + 1
 ```
+
+
+## df 페이지
+```{python}
+
+```
+
+## oecd 페이지
+```{python}
+
+```
+
+
+
+
