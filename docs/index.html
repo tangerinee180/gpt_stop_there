@@ -149,13 +149,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#서론" id="toc-서론" class="nav-link active" data-scroll-target="#서론">서론</a>
-  <ul class="collapse">
+  <li><a href="#서론" id="toc-서론" class="nav-link active" data-scroll-target="#서론">서론</a></li>
   <li><a href="#우리가-사용한-데이터와-수치들" id="toc-우리가-사용한-데이터와-수치들" class="nav-link" data-scroll-target="#우리가-사용한-데이터와-수치들">우리가 사용한 데이터와 수치들</a></li>
   <li><a href="#cpi-소비자물가지수란" id="toc-cpi-소비자물가지수란" class="nav-link" data-scroll-target="#cpi-소비자물가지수란"><strong>CPI: 소비자물가지수란?</strong></a></li>
-  </ul></li>
-  <li><a href="#main" id="toc-main" class="nav-link" data-scroll-target="#main">Main</a>
-  <ul class="collapse">
   <li><a href="#cpi소비자-물가-지수" id="toc-cpi소비자-물가-지수" class="nav-link" data-scroll-target="#cpi소비자-물가-지수">CPI(소비자 물가 지수)</a>
   <ul class="collapse">
   <li><a href="#인플레이션" id="toc-인플레이션" class="nav-link" data-scroll-target="#인플레이션">인플레이션</a></li>
@@ -169,7 +165,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#oecd-평균-임금-추가한-그래프" id="toc-oecd-평균-임금-추가한-그래프" class="nav-link" data-scroll-target="#oecd-평균-임금-추가한-그래프">OECD 평균 임금 추가한 그래프</a></li>
   </ul></li>
   <li><a href="#oecd-주요-국가의-평균-실질-임금-그래프" id="toc-oecd-주요-국가의-평균-실질-임금-그래프" class="nav-link" data-scroll-target="#oecd-주요-국가의-평균-실질-임금-그래프">OECD 주요 국가의 평균 실질 임금 그래프</a></li>
-  </ul></li>
   <li><a href="#결론" id="toc-결론" class="nav-link" data-scroll-target="#결론"><strong>결론</strong></a></li>
   </ul>
 </nav>
@@ -196,9 +191,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="서론" class="level2">
-<h2 class="anchored" data-anchor-id="서론">서론</h2>
-<div id="22f339ca" class="cell" data-execution_count="1">
+<section id="서론" class="level3">
+<h3 class="anchored" data-anchor-id="서론">서론</h3>
+<div id="4d4eebd9" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt    </span>
@@ -208,7 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"figure.figsize"</span>: [<span class="dv">8</span>, <span class="dv">6</span>],</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"font.size"</span>: <span class="dv">11</span>,</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"font.family"</span>: <span class="st">"Malgun Gothic"</span>})</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">###서론</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>intro <span class="op">=</span> pd.read_excel(<span class="st">"file/소비자동향조사.xlsx"</span>)</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> [<span class="fl">5.5</span>,<span class="dv">4</span>])</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>intro[<span class="st">"year"</span>]</span>
@@ -229,9 +224,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<ul>
-<li></li>
-</ul>
+<p><strong>소비자동향조사에 따르면, 소비자들은 경기를 부정적으로 판단하고 있는데, 그에 반해 임금 수준은 상승할 것이라고 예상한다. 그렇다면 임금은 정말 지속적으로 상승했는지, 소비자들이 임금 상승의 수혜를 제대로 받고 있는지 알아보기 위해 최저임금 데이터를 바탕으로 분석을 진행하였다. </strong></p>
+</section>
 <section id="우리가-사용한-데이터와-수치들" class="level3">
 <h3 class="anchored" data-anchor-id="우리가-사용한-데이터와-수치들">우리가 사용한 데이터와 수치들</h3>
 <p><img src="./1.PNG" class="img-fluid"> <img src="./2.PNG" class="img-fluid"> <img src="./3.PNG" class="img-fluid"></p>
@@ -242,15 +236,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="./CPI.PNG" class="img-fluid"></p>
 <p>CPI(소비자 물가 지수) : 소비자들이 일상 생활에서 구매하는 상품과 서비스의 가격 변동을 측정하는 지표이다. 그 측정을 위해 다양한 소비자 Basket을 사용하며, 일반적인 CPI의 Basket엔 식품, 주택, 의류, 교통, 교육, 의료 등 모든 상품과 서비스가 포함된다. 예시로 식품 물가 지수의 Basket 안엔 음식만 들어가있다고 보면 된다.</p>
 </section>
-</section>
-<section id="main" class="level1">
-<h1>Main</h1>
 <section id="cpi소비자-물가-지수" class="level2">
 <h2 class="anchored" data-anchor-id="cpi소비자-물가-지수">CPI(소비자 물가 지수)</h2>
 <ul>
 <li>데이터 파일 읽어오기</li>
 </ul>
-<div id="96058b71" class="cell" data-execution_count="2">
+<div id="732fa2c2" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_excel(<span class="st">"file/cpi_2011to2023.xlsx"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="22">
@@ -415,7 +406,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>컬럼명 변경, 행 제거, 특정 컬럼 추출</li>
 </ul>
-<div id="5e5effaf" class="cell" data-execution_count="3">
+<div id="80a35bfd" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.rename(columns <span class="op">=</span> {<span class="st">'시점'</span>:<span class="st">"year"</span>,<span class="st">"전국"</span> : <span class="st">"cpi"</span>,<span class="st">"전국.2"</span>:<span class="st">"food_cpi"</span>},inplace<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df.drop(<span class="dv">0</span>,inplace<span class="op">=</span><span class="va">True</span>) </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span>df[[<span class="st">'year'</span>,<span class="st">'cpi'</span>,<span class="st">'food_cpi'</span>]]</span>
@@ -428,7 +419,7 @@ df.drop(0,inplace=True) 와 df = df.drop(0) 같은 의미이다.</p></li>
 인덱스 번호를 초기화하는 함수로 drop=True 해야 전 인덱스 번호가 사라진다.</p></li>
 <li><p>최저시급 열 추가</p></li>
 </ul>
-<div id="007b10ba" class="cell" data-execution_count="4">
+<div id="73d9c77d" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span> <span class="op">=</span> [<span class="st">"4,320"</span>,<span class="st">"4,580"</span>,<span class="st">"4,860"</span>,<span class="st">"5,210"</span>,<span class="st">"5,580"</span>,<span class="st">"6,030"</span>,<span class="st">"6,470"</span>,<span class="op">\</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>        <span class="st">"7,530"</span>,<span class="st">"8,350"</span>,<span class="st">"8,590"</span>,<span class="st">"8,720"</span>,<span class="st">"9,160"</span>,<span class="st">"9,620"</span>]</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'min_wage'</span>] <span class="op">=</span> np.array(<span class="bu">list</span>)</span>
@@ -493,7 +484,7 @@ df.drop(0,inplace=True) 와 df = df.drop(0) 같은 의미이다.</p></li>
 <ul>
 <li>최저시급과 연도 컬럼 정수형으로 변경</li>
 </ul>
-<div id="4968529a" class="cell" data-execution_count="5">
+<div id="2afaa613" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(df[<span class="st">"min_wage"</span>][<span class="dv">0</span>])</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(df[<span class="st">"year"</span>][<span class="dv">0</span>])</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"min_wage"</span>] <span class="op">=</span> df[<span class="st">"min_wage"</span>].<span class="bu">str</span>.replace(<span class="st">','</span>,<span class="st">""</span>).astype(<span class="bu">int</span>) </span>
@@ -504,7 +495,7 @@ df.drop(0,inplace=True) 와 df = df.drop(0) 같은 의미이다.</p></li>
 <pre><code>numpy.int64</code></pre>
 </div>
 </div>
-<div id="bbef2e7e" class="cell" data-execution_count="6">
+<div id="3f2546f4" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="26">
 <div>
@@ -621,7 +612,7 @@ df.drop(0,inplace=True) 와 df = df.drop(0) 같은 의미이다.</p></li>
 <ul>
 <li>소비자 물가 지수 기준을 2011년으로 변환</li>
 </ul>
-<div id="a6513248" class="cell" data-execution_count="7">
+<div id="30cd93c8" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cpi_coefficent<span class="op">=</span>df[<span class="st">'cpi'</span>][<span class="dv">0</span>]<span class="op">/</span>df[<span class="st">'cpi'</span>][<span class="dv">9</span>]</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>food_coefficent<span class="op">=</span>df[<span class="st">'food_cpi'</span>][<span class="dv">0</span>]<span class="op">/</span>df[<span class="st">'food_cpi'</span>][<span class="dv">9</span>]</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"cpi"</span>] <span class="op">=</span> df[<span class="st">"cpi"</span>]<span class="op">/</span>cpi_coefficent</span>
@@ -690,7 +681,7 @@ df.drop(0,inplace=True) 와 df = df.drop(0) 같은 의미이다.</p></li>
 <ul>
 <li>인플레이션 계산</li>
 </ul>
-<div id="b49f8470" class="cell" data-execution_count="8">
+<div id="99a0f953" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"inflation"</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(df)):</span>
@@ -762,7 +753,7 @@ df.drop(0,inplace=True) 와 df = df.drop(0) 같은 의미이다.</p></li>
 <ul>
 <li>식품 인플레이션 계산</li>
 </ul>
-<div id="e2495620" class="cell" data-messeage="false" data-execution_count="9">
+<div id="d4c41716" class="cell" data-messeage="false" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'food_inflation'</span>] <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(df)):<span class="op">\</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    df.loc[i, <span class="st">"food_inflation"</span>] <span class="op">=</span> ((df.loc[i, <span class="st">"food_cpi"</span>] <span class="op">-</span> df.loc[i<span class="op">-</span><span class="dv">1</span>, <span class="st">"food_cpi"</span>])<span class="op">\</span></span>
@@ -840,7 +831,7 @@ df.drop(0,inplace=True) 와 df = df.drop(0) 같은 의미이다.</p></li>
 </section>
 <section id="인플레이션-식품-인플레이션-비교-그래프" class="level3">
 <h3 class="anchored" data-anchor-id="인플레이션-식품-인플레이션-비교-그래프">인플레이션, 식품 인플레이션 비교 그래프</h3>
-<div id="c2263642" class="cell" data-execution_count="10">
+<div id="960b3f77" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="fl">5.5</span>,<span class="dv">4</span>))</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>sns.lineplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'year'</span>, y<span class="op">=</span><span class="st">'food_inflation'</span>,color<span class="op">=</span><span class="st">'red'</span> ,label<span class="op">=</span><span class="st">'식품 인플레이션'</span>, marker<span class="op">=</span><span class="st">'o'</span>)</span>
@@ -868,7 +859,7 @@ df.drop(0,inplace=True) 와 df = df.drop(0) 같은 의미이다.</p></li>
 <ul>
 <li>최저시급, 실질 최저시급 상승률</li>
 </ul>
-<div id="945d541b" class="cell" data-messeage="false" data-execution_count="11">
+<div id="65c24bce" class="cell" data-messeage="false" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>infla_coefficient <span class="op">=</span> np.array(<span class="dv">100</span><span class="op">/</span>df[<span class="st">'cpi'</span>])</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'real_wage'</span>] <span class="op">=</span> df[<span class="st">'min_wage'</span>] <span class="op">*</span> infla_coefficient</span>
@@ -976,7 +967,7 @@ df.drop(0,inplace=True) 와 df = df.drop(0) 같은 의미이다.</p></li>
 </section>
 <section id="최저시급-실질-최저시급-상승률-비교" class="level3">
 <h3 class="anchored" data-anchor-id="최저시급-실질-최저시급-상승률-비교">최저시급/ 실질 최저시급 상승률 비교</h3>
-<div id="7b7e44c0" class="cell" data-execution_count="12">
+<div id="6bb6e4f6" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="fl">5.5</span>,<span class="dv">4</span>))</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>sns.lineplot(data<span class="op">=</span>df,x<span class="op">=</span><span class="st">'year'</span>,y<span class="op">=</span><span class="st">'min_wage_roc'</span>,color<span class="op">=</span><span class="st">'red'</span>,label<span class="op">=</span><span class="st">' 최저시급 변화율'</span>,marker<span class="op">=</span><span class="st">'o'</span>)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>sns.lineplot(data<span class="op">=</span>df,x<span class="op">=</span><span class="st">'year'</span>,y<span class="op">=</span><span class="st">'real_wage_roc'</span>,color<span class="op">=</span><span class="st">'dodgerblue'</span>,label<span class="op">=</span><span class="st">'실질 최저시급 변화율'</span>,marker<span class="op">=</span><span class="st">'o'</span>)</span>
@@ -1013,7 +1004,7 @@ df.drop(0,inplace=True) 와 df = df.drop(0) 같은 의미이다.</p></li>
 <ul>
 <li>칼럼 확인</li>
 </ul>
-<div id="3b03ca35" class="cell" data-execution_count="13">
+<div id="dc9cec09" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>before_frame <span class="op">=</span> pd.read_excel(<span class="st">"file/2/최저임금데이터_df.xlsx"</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>path1, path2 <span class="op">=</span> [<span class="st">"file/2/PPP원데이터_df.xlsx"</span>,<span class="st">"file/2/환율원데이터_df.xlsx"</span>]</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> pd.read_excel(path1) </span>
@@ -1027,7 +1018,7 @@ df.drop(0,inplace=True) 와 df = df.drop(0) 같은 의미이다.</p></li>
 <ul>
 <li>추가 데이터 병합 및 열 지정 (1)</li>
 </ul>
-<div id="64aaa74b" class="cell" data-execution_count="14">
+<div id="7f17336d" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df2.rename(columns <span class="op">=</span> {<span class="st">"Reference area"</span>:<span class="st">"country"</span>,<span class="st">"Unnamed: 3"</span>:<span class="st">"dollar_ppp"</span>},inplace<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df2[<span class="st">"dollar_ppp"</span>] <span class="op">=</span> df2[<span class="st">"dollar_ppp"</span>].astype(<span class="bu">float</span>)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1098,7 +1089,7 @@ df.drop(0,inplace=True) 와 df = df.drop(0) 같은 의미이다.</p></li>
 <ul>
 <li>추가 데이터 병합 및 열 지정 (2)</li>
 </ul>
-<div id="414b9a75" class="cell" data-execution_count="15">
+<div id="9007aaa9" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df3 <span class="op">=</span> pd.read_excel(path2) </span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>df3.rename(columns <span class="op">=</span> {<span class="st">"Reference area"</span>:<span class="st">"country"</span>,<span class="st">"Unnamed: 4"</span>:<span class="st">"exchange_rate"</span>},inplace<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>df3 <span class="op">=</span> df3[df3[<span class="st">'Transaction'</span>]<span class="op">==</span><span class="st">"Exchange rates, average"</span>].reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
@@ -1176,7 +1167,7 @@ df.drop(0,inplace=True) 와 df = df.drop(0) 같은 의미이다.</p></li>
 <li><p><strong>다른 나라와 한국의 실질 최저 임금을 비교하기 위해서 (환율/PPP)를 변환 계수로 사용해 최저시급 (달러)에 곱하여, 각 나라 간 비교할 수 있는 실질 임금 지표를 만들었다.</strong></p></li>
 <li><p>환율/ PPP 열 추가</p></li>
 </ul>
-<div id="f685e18b" class="cell" data-execution_count="16">
+<div id="5b7c8d5e" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>oecd[<span class="st">"coefficient"</span>] <span class="op">=</span> oecd[<span class="st">"exchange_rate"</span>]<span class="op">/</span>oecd[<span class="st">"dollar_ppp"</span>]</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>oecd[<span class="st">"real_wage"</span>] <span class="op">=</span> oecd[<span class="st">"min_wage"</span>]<span class="op">*</span>oecd[<span class="st">"coefficient"</span>]</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1258,7 +1249,7 @@ df.drop(0,inplace=True) 와 df = df.drop(0) 같은 의미이다.</p></li>
 <ul>
 <li>OECD 국가별 최저임금 비교</li>
 </ul>
-<div id="b87e31ba" class="cell" data-messeage="false" data-execution_count="17">
+<div id="4feefb58" class="cell" data-messeage="false" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>oecd <span class="op">=</span> oecd.sort_values(<span class="st">"real_wage"</span>,ascending<span class="op">=</span><span class="va">True</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">4</span>))</span>
@@ -1289,7 +1280,7 @@ df.drop(0,inplace=True) 와 df = df.drop(0) 같은 의미이다.</p></li>
 </ul>
 <section id="oecd-평균-임금-추가한-그래프" class="level3">
 <h3 class="anchored" data-anchor-id="oecd-평균-임금-추가한-그래프">OECD 평균 임금 추가한 그래프</h3>
-<div id="26f082ad" class="cell" data-messeage="false" data-execution_count="18">
+<div id="8a6b8548" class="cell" data-messeage="false" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>mean1 <span class="op">=</span> oecd[<span class="st">"real_wage"</span>].mean()</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#country 에 평균 임금을 추가.</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>frame <span class="op">=</span> pd.DataFrame({<span class="st">"country"</span>:<span class="st">'Mean'</span>,<span class="st">"real_wage"</span>:mean1},index<span class="op">=</span>[<span class="dv">0</span>])</span>
@@ -1299,7 +1290,7 @@ df.drop(0,inplace=True) 와 df = df.drop(0) 같은 의미이다.</p></li>
 <ul>
 <li></li>
 </ul>
-<div id="89c7e522" class="cell" data-messeage="false" data-execution_count="19">
+<div id="f074044f" class="cell" data-messeage="false" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Mean,Korea 색 다르게 하기</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>bar_colors <span class="op">=</span> np.where(oecd1[<span class="st">"country"</span>]<span class="op">==</span><span class="st">"Korea"</span>,<span class="st">"red"</span>,np.where(oecd1[<span class="st">"country"</span>]<span class="op">==</span><span class="st">"Mean"</span>,<span class="st">"seagreen"</span>,<span class="st">"dodgerblue"</span>))</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1313,7 +1304,7 @@ df.drop(0,inplace=True) 와 df = df.drop(0) 같은 의미이다.</p></li>
 <ul>
 <li></li>
 </ul>
-<div id="b8432f83" class="cell" data-execution_count="20">
+<div id="7749a9ed" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>oecd1[<span class="st">"country"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="39">
 <pre><code>0              Mexico
@@ -1351,7 +1342,7 @@ Name: country, dtype: object</code></pre>
 <ul>
 <li></li>
 </ul>
-<div id="dbf37ee7" class="cell" data-messeage="false" data-execution_count="21">
+<div id="b409323f" class="cell" data-messeage="false" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>show_country_label <span class="op">=</span> [<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">11</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">16</span>,<span class="dv">18</span>,<span class="dv">20</span>,<span class="dv">22</span>,<span class="dv">24</span>,<span class="dv">27</span>]</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>show_country <span class="op">=</span> [<span class="st">'Mexico'</span>, <span class="st">'Hungary'</span>, <span class="st">'United States'</span>, <span class="st">'Poland'</span>, <span class="st">'Portugal'</span>, <span class="st">'Mean'</span>,<span class="st">'Japan'</span>, <span class="st">'Korea'</span>, <span class="st">'Canada'</span>, <span class="st">'Spain'</span>,<span class="op">\</span></span>
@@ -1366,7 +1357,7 @@ Name: country, dtype: object</code></pre>
 </section>
 <section id="oecd-주요-국가의-평균-실질-임금-그래프" class="level2">
 <h2 class="anchored" data-anchor-id="oecd-주요-국가의-평균-실질-임금-그래프">OECD 주요 국가의 평균 실질 임금 그래프</h2>
-<div id="a1f209dc" class="cell" data-messeage="false" data-execution_count="22">
+<div id="54738dea" class="cell" data-messeage="false" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>mean1 <span class="op">=</span> oecd[<span class="st">"real_wage"</span>].mean()</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>frame <span class="op">=</span> pd.DataFrame({<span class="st">"country"</span>:<span class="st">'Mean'</span>,<span class="st">"real_wage"</span>:mean1},index<span class="op">=</span>[<span class="dv">0</span>])</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>oecd1 <span class="op">=</span> pd.concat([oecd,frame])</span>
@@ -1403,7 +1394,6 @@ Name: country, dtype: object</code></pre>
 </ul>
 <hr>
 </section>
-</section>
 <section id="결론" class="level1">
 <h1><strong>결론</strong></h1>
 <ol type="1">
@@ -1415,8 +1405,8 @@ Name: country, dtype: object</code></pre>
 <ol start="3" type="1">
 <li>우리나라의 최저 임금은 OECD 내에서도 평균 이상이기 때문에, 최저임금의 대폭 인상은 바람직하지 않다.</li>
 </ol>
-<p><strong>최저 시급의 대폭 인상은 인플레이션과 고용시장에의 부정적 영향 등의 부작용을 동반한다.</strong></p>
-<p><strong>최저임금 상승의 목적인 근로자의 소득 수준 상승과 그에 따른 소비 여력의 증가로 인한 경제 활성화는 노동, 복지 등의 다른 관점에서 접근하는 것이 유리할 수 있다.</strong></p>
+<p><strong>최저 시급의 대폭 인상은 인플레이션과 고용시장에의 부정적 영향 등의 부작용을 동반한다.</strong><br>
+<strong>최저임금 상승의 목적인 근로자의 소득 수준 상승과 그에 따른 소비 여력의 증가로 인한 경제 활성화는 노동, 복지 등의 다른 관점에서 접근하는 것이 유리할 수 있다.</strong></p>
 
 
 </section>
