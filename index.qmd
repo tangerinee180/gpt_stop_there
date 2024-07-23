@@ -1,11 +1,15 @@
 ---
-title: "Gpt-stop-there"
+title: "Gpt-stop-there project1"
 jupyter: python3
 ---
 
 # Introduction
     서론 발표 내용
-
+    
+    
+#### CPI: 소비자물가지수                
+    
+#### 
 
 ```{python}
 import pandas as pd
@@ -36,39 +40,41 @@ plt.show()
 
 # Main
 ## CPI 
-####  file read
+* 데이터 파일 읽어오기
 ```{python}
 df = pd.read_excel("file/cpi_2011to2023.xlsx")
 df.head()
 ```
-
-    컬럼명 변경, inplace=True, 행 제거, 특정 칼럼 추출, 최저시급 리스트 추가
+* 컬럼명 변경, 행 제거, 특정 컬럼 추출
     
 ```{python}
 df.rename(columns = {'시점':"year","전국" : "cpi","전국.2":"food_cpi"},inplace=True)
-df.drop(0,inplace=True) #inplace = True 설명
+df.drop(0,inplace=True) 
 df=df[['year','cpi','food_cpi']]
 df.reset_index(drop=True,inplace=True)#선생님한테 물어보기
+```
+* 최저시급 리스트 추가
+```{python}
 list = ["4,320","4,580","4,860","5,210","5,580","6,030","6,470",\
         "7,530","8,350","8,590","8,720","9,160","9,620"]
 df['min_wage'] = np.array(list)
 df = df[['year',"min_wage", 'cpi', 'food_cpi']]
 df.head()
 ```
-    최저시급, 연도 정수형int 변경
+
+* 최저시급과 년도 컬럼 정수형으로 변경
 ```{python}
 type(df["min_wage"][0])
 type(df["year"][0])
 df["min_wage"] = df["min_wage"].str.replace(',',"").astype(int) 
-df["year"]     = df["year"].astype(int) 
+df["year"] = df["year"].astype(int) 
 df.dtypes
 ```
 
-#### CPI 2011년 기준으로 변환
 ```{python}
 df
 ```
-
+* CPI 기준을 2011년으로 변환
 ```{python}
 cpi_coefficent=df['cpi'][0]/df['cpi'][9]
 food_coefficent=df['food_cpi'][0]/df['food_cpi'][9]
@@ -77,7 +83,7 @@ df["food_cpi"] = df["food_cpi"]/food_coefficent
 df.head()
 ```
 
-#### Inflation 계산 
+* Inflation 계산 
 ```{python}
 df["inflation"] = 0.0
 
@@ -87,7 +93,7 @@ for i in range(1, len(df)):
 df.head()
 ```
 
-#### Food inflation 계산
+* Food inflation 계산
 ```{python}
 #| messeage: false
 #| warning: false #furture warning 에러창 뜨지 않게 하기기
@@ -98,8 +104,9 @@ for i in range(1, len(df)):\
 df['food_inflation'] = df['food_inflation'].fillna(0)
 df.head()
 ```
-
+### 다시하기기
 #### inf,food_inf 시각화 두개 동시에 꺾은선 그래프
+
 ```{python}
 plt.clf()
 plt.figure(figsize=(9,7))
