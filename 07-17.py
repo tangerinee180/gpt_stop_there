@@ -139,6 +139,7 @@ oecd
 #bar 그래프 == 
 oecd
 
+bar_colors = np.where(df["country"]=="Korea","red",np.where(df["country"]=="mean","green","blue"))
 bar_colors = ['red' if country == 'Korea' else 'blue' for country in oecd['country']]
 #리스트 컴프리핸션 구문 순서
 
@@ -161,8 +162,8 @@ frame = pd.DataFrame({"country":'Mean',"real_wage":mean1},index=[0])
 oecd1 = pd.concat([oecd,frame])
 oecd1["country"]
 oecd1 = oecd1.sort_values("real_wage",ascending=True).reset_index(drop=True)
-bar_colors = ['red' if country == 'Korea' else 'blue' for country in oecd['country']]
-bar_colors.insert(11,"green")
+bar_colors = np.where(oecd1["country"]=="Korea","red",np.where(oecd1["country"]=="Mean","green","blue"))
+
 
 plt.figure(figsize=(14, 8))
 sns.barplot(data=oecd1.sort_values("real_wage",ascending=True), \
