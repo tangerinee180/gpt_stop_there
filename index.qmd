@@ -129,7 +129,7 @@ df['food_inflation'] = 0
 for i in range(1, len(df)):\
     df.loc[i, "food_inflation"] = ((df.loc[i, "food_cpi"] - df.loc[i-1, "food_cpi"])\
    /df.loc[i-1, "food_cpi"]) * 100
-df['food_inflation'] = df['food_inflation'].fillna(0)
+
 df.head()
 ```
 
@@ -357,8 +357,8 @@ bar_colors = np.where(oecd1["country"]=="Korea","red",np.where(oecd1["country"]=
 sns.barplot(data=oecd1.sort_values("real_wage",ascending=True),\
 x='country', y='real_wage', palette=bar_colors)
 
-plt.xlabel('Country',fontsize=14)  # 축 제목 글씨 크기 조정
-plt.ylabel('Real Wage',fontsize=14)  # 축 제목 글씨 크기 조정
+plt.xlabel('나라',fontsize=14)  # 축 제목 글씨 크기 조정
+plt.ylabel('실질 최저 임금',fontsize=14)  # 축 제목 글씨 크기 조정
 plt.title('OECD 주요국가별 실질 최저임금', fontsize=20)  # 제목 글씨 크기 조정
 show_country_label = [0,3,7,9,11,13,14,16,18,20,22,24,27]
 

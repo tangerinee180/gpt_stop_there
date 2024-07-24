@@ -25,7 +25,7 @@
         "\n",
         "-   데이터 파일 읽어오기\n"
       ],
-      "id": "ca89532d"
+      "id": "54186d0d"
     },
     {
       "cell_type": "code",
@@ -34,7 +34,7 @@
         "df = pd.read_excel(\"file/cpi_2011to2023.xlsx\")\n",
         "df.head()"
       ],
-      "id": "76b434a8",
+      "id": "6e99e7e1",
       "execution_count": null,
       "outputs": []
     },
@@ -44,7 +44,7 @@
       "source": [
         "-   컬럼명 변경, 행 제거, 특정 컬럼 추출\n"
       ],
-      "id": "629d37c7"
+      "id": "cc3e5ed5"
     },
     {
       "cell_type": "code",
@@ -55,7 +55,7 @@
         "df=df[['year','cpi','food_cpi']]\n",
         "df.reset_index(drop=True,inplace=True)"
       ],
-      "id": "194c2f66",
+      "id": "c85cc470",
       "execution_count": null,
       "outputs": []
     },
@@ -71,7 +71,7 @@
         "\n",
         "-   최저시급 열 추가\n"
       ],
-      "id": "794f0570"
+      "id": "beb3a3b7"
     },
     {
       "cell_type": "code",
@@ -83,7 +83,7 @@
         "df = df[['year',\"min_wage\", 'cpi', 'food_cpi']]\n",
         "df.head()"
       ],
-      "id": "f508f6bf",
+      "id": "6db46242",
       "execution_count": null,
       "outputs": []
     },
@@ -93,7 +93,7 @@
       "source": [
         "-   최저시급과 연도 컬럼 정수형으로 변경\n"
       ],
-      "id": "0d675b91"
+      "id": "1cc4f1bf"
     },
     {
       "cell_type": "code",
@@ -106,7 +106,7 @@
         "type(df[\"min_wage\"][0])\n",
         "type(df[\"year\"][0])"
       ],
-      "id": "a6a00d0b",
+      "id": "2f7d8ff6",
       "execution_count": null,
       "outputs": []
     },
@@ -116,7 +116,7 @@
       "source": [
         "df"
       ],
-      "id": "8184b90d",
+      "id": "ba7f3508",
       "execution_count": null,
       "outputs": []
     },
@@ -126,7 +126,7 @@
       "source": [
         "-   소비자 물가 지수 기준을 2011년으로 변환\n"
       ],
-      "id": "7f1aa648"
+      "id": "aa41ff2f"
     },
     {
       "cell_type": "code",
@@ -138,7 +138,7 @@
         "df[\"food_cpi\"] = df[\"food_cpi\"]/food_coefficent\n",
         "df.head()"
       ],
-      "id": "46d8b34c",
+      "id": "94b1284d",
       "execution_count": null,
       "outputs": []
     },
@@ -154,7 +154,7 @@
         "\n",
         "-   인플레이션 계산\n"
       ],
-      "id": "094918e3"
+      "id": "a47470dc"
     },
     {
       "cell_type": "code",
@@ -167,7 +167,7 @@
         "    /df.loc[i-1, \"cpi\"]) * 100\n",
         "df.head()"
       ],
-      "id": "85cd9004",
+      "id": "a7f96c91",
       "execution_count": null,
       "outputs": []
     },
@@ -177,7 +177,7 @@
       "source": [
         "-   식품 인플레이션 계산\n"
       ],
-      "id": "33eb0286"
+      "id": "87303c3f"
     },
     {
       "cell_type": "code",
@@ -193,7 +193,7 @@
         "df['food_inflation'] = df['food_inflation'].fillna(0)\n",
         "df.head()"
       ],
-      "id": "99f231c9",
+      "id": "c072c704",
       "execution_count": null,
       "outputs": []
     },
@@ -203,7 +203,7 @@
       "source": [
         "### 인플레이션, 식품 인플레이션 비교 그래프\n"
       ],
-      "id": "84696b82"
+      "id": "00a9d160"
     },
     {
       "cell_type": "code",
@@ -221,7 +221,7 @@
         "# 그래프 표시\n",
         "plt.show()"
       ],
-      "id": "5ba453af",
+      "id": "0856830e",
       "execution_count": null,
       "outputs": []
     },
@@ -235,7 +235,7 @@
         "\n",
         "-   최저시급, 실질 최저시급 상승률\n"
       ],
-      "id": "93d11142"
+      "id": "393bc576"
     },
     {
       "cell_type": "code",
@@ -264,7 +264,7 @@
         "         'cpi', 'food_cpi', 'inflation', 'food_inflation']]\n",
         "df.head()"
       ],
-      "id": "fd05a21e",
+      "id": "5dadff00",
       "execution_count": null,
       "outputs": []
     },
@@ -274,7 +274,7 @@
       "source": [
         "### 최저시급/ 실질 최저시급 상승률 비교\n"
       ],
-      "id": "2a693327"
+      "id": "8fd44a7c"
     },
     {
       "cell_type": "code",
@@ -292,7 +292,7 @@
         "plt.legend()\n",
         "plt.show()"
       ],
-      "id": "680522a1",
+      "id": "fc44390b",
       "execution_count": null,
       "outputs": []
     },
@@ -302,7 +302,7 @@
       "source": [
         "**\"실질 최저시급\"의 상승률이 모든 연도에서 최저시급의 상승률보다 낮다.** **또한 2021 \\~ 2022년도 같은 경우 최저 시급이 상승했음에도 실질 최저 시급이 하락했다.**"
       ],
-      "id": "a3d2bba9"
+      "id": "57f1681d"
     }
   ],
   "metadata": {
