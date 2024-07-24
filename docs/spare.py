@@ -50,168 +50,23 @@ plt.show()
 ![](./CPI.PNG)
 
 CPI(소비자 물가 지수) :
-소비자들이 일상 생활에서 구매하는 상품과 서비스의 가격 변동을 측정하는 지표이다. 그 측정을 위해 다양한 소비자 Basket을 사용하며, 일반적인 CPI의 Basket엔 식품, 주택, 의류, 교통, 교육, 의료 등 모든 상품과 서비스가 포함된다.
-
-식품 물가 지수는 식품의 가격 변동을 측정하는 지표로, 필수재인 식품의 가격 변동을 반영한다. 식품은 가격 변동이 크기 때문에 소비자에게 체감되는 영향이 크다.
-
-## CPI(소비자 물가 지수) 
-
-* 데이터 파일 읽어오기
-```{python}
-df = pd.read_excel("file/cpi_2011to2023.xlsx")
-df.head()
-```
-
-* 컬럼명 변경, 행 제거, 특정 컬럼 추출
-```{python}
-df.rename(columns = {'시점':"year","전국" : "cpi","전국.2":"food_cpi"},inplace=True)
-df.drop(0,inplace=True) 
-df=df[['year','cpi','food_cpi']]
-df.reset_index(drop=True,inplace=True)
-```
-* **inplace = True**                
-df.drop(0,inplace=True) 와 df = df.drop(0) 같은 의미이다.
-
-* **reset_index(drop=True)**                
-인덱스 번호를 초기화하는 함수로 drop=True 해야 전 인덱스 번호가 사라진다.
-
-
-* 최저시급 열 추가
-```{python}
-list = ["4,320","4,580","4,860","5,210","5,580","6,030","6,470",\
-        "7,530","8,350","8,590","8,720","9,160","9,620"]
-df['min_wage'] = np.array(list)
-df = df[['year',"min_wage", 'cpi', 'food_cpi']]
-df.head()
-```
-
-* 최저시급과 연도 컬럼 정수형으로 변경
-```{python}
-type(df["min_wage"][0])
-type(df["year"][0])
-df["min_wage"] = df["min_wage"].str.replace(',',"").astype(int) 
-df["year"] = df["year"].astype(int) 
-type(df["min_wage"][0])
-type(df["year"][0])
-```
-
-```{python}
-df
-```
-
-* 소비자 물가 지수 기준을 2011년으로 변환
-```{python}
-cpi_coefficent=df['cpi'][0]/df['cpi'][9]
-food_coefficent=df['food_cpi'][0]/df['food_cpi'][9]
-df["cpi"] = df["cpi"]/cpi_coefficent
-df["food_cpi"] = df["food_cpi"]/food_coefficent
-df.head()
-```
-
-### 인플레이션
-**우리가 흔히 알고 있는 인플레이션율이란 물가 상승률로, CPI의 변화율로 측정할 수 있다. 일반적인 국가에선 물가는 지속적으로 상승하기 때문에 인플레이션은 대부분 양수로 나타난다.**
-
-![](./inflation.PNG)
-
-* 인플레이션 계산 
-```{python}
-df["inflation"] = 0.0
-
-for i in range(1, len(df)):
-    df.loc[i, "inflation"] = ((df.loc[i, "cpi"] - df.loc[i-1, "cpi"])\
-    /df.loc[i-1, "cpi"]) * 100
-df.head()
-```
-
-* 식품 인플레이션 계산
-```{python}
-#| messeage: false
-#| warning: false #furture warning 에러창 뜨지 않게 하기기
-df['food_inflation'] = 0
-for i in range(1, len(df)):\
-    df.loc[i, "food_inflation"] = ((df.loc[i, "food_cpi"] - df.loc[i-1, "food_cpi"])\
-   /df.loc[i-1, "food_cpi"]) * 100
-df['food_inflation'] = df['food_inflation'].fillna(0)
-df.head()
-```
-
-### 인플레이션, 식품 인플레이션 비교 그래프
-```{python}
-plt.clf()
-plt.figure(figsize=(5.5,4))
-sns.lineplot(data=df, x='year', y='food_inflation',color='red' ,label='식품 인플레이션', marker='o')
-sns.lineplot(data=df, x='year', y='inflation',color='dodgerblue',label='총 인플레이션', marker='o')
-# 레이블과 제목 설정
-plt.xlabel('Year',fontsize=16)
-plt.ylabel('Percentage(%)',fontsize=16)
-plt.title('총 인플레이션과 식품 인플레이션의 비교')
-plt.legend()
-# 그래프 표시
-plt.show()
-```
-
-**그래프를 통해 식품 인플레이션의 변화율이 크다는 것을 알 수 있다. 식품 부문 인플레이션이 더 크기 때문에 실제 소비자가 체감하는 물가상승률이 더 크다는 점 또한 알 수 있다.**
-
-//////////////////
-
-**똑같은 최저 시급을 받더라도 인플레이션이 있다면 내가 실제로 받는 시급은 줄어들게 된다. 우리가 실질적으로 받는 최저 시급을 구하기 위해서 인플레이션 조정계수를 구한후 최저 시급에 곱했다. 인플레이션 조정 계수를 곱함으로써 물가의 영향을 제거할 수 있다.**
-
-* 최저시급, 실질 최저시급 상승률 
-```{python}
-#| messeage: false
-#| warning: false 
-
-infla_coefficient = np.array(100/df['cpi'])
-
-df['real_wage'] = df['min_wage'] * infla_coefficient
-df['real_wage'] = df['real_wage'].astype(int)
-
-df["real_wage_roc"] = 0
-for i in range(1, len(df)):
-    df.loc[i, "real_wage_roc"] = ((df.loc[i, "real_wage"] - df.loc[i-1, "real_wage"])\
-   /df.loc[i-1, "real_wage"]) * 100
-
-df["min_wage_roc"] = 0
-for i in range(1, len(df)):
-    df.loc[i, "min_wage_roc"] = ((df.loc[i, "min_wage"] - df.loc[i-1, "min_wage"])\
-   /df.loc[i-1, "min_wage"]) * 100
-
-df = df[['year', 'min_wage','real_wage',"min_wage_roc","real_wage_roc",\
-         'cpi', 'food_cpi', 'inflation', 'food_inflation']]
-df.head()
-```
-
-### 최저시급/ 실질 최저시급 상승률 비교 
-```{python}
-
-plt.figure(figsize=(5.5,4))
-sns.lineplot(data=df,x='year',y='min_wage_roc',color='red',label=' 최저시급 변화율',marker='o')
-sns.lineplot(data=df,x='year',y='real_wage_roc',color='dodgerblue',label='실질 최저시급 변화율',marker='o')
-# 레이블과 제목 설정
-plt.xlabel('Year',fontsize=16)
-plt.ylabel('Percentage(%)',fontsize=16)
-plt.ylim(-2, 17)
-plt.grid()
-plt.title('최저시급과 실질 최저시급의 변화율 비교')
-plt.legend()
-plt.show()
-```
-**"실질 최저시급"의 상승률이 모든 연도에서 최저시급의 상승률보다 낮다.**
-**또한 2021 ~ 2022년도 같은 경우 최저 시급이 상승했음에도 실질 최저 시급이 하락했다.**
-
+소비자들이 일상 생활에서 구매하는 상품과 서비스의 가격 변동을 측정하는 지표이다. 그 측정을 위해 다양한 소비자 Basket을 사용하며, 일반적인 CPI의 Basket엔 식품, 주택, 의류, 교통, 교육, 의료 등 모든 상품과 서비스가 포함된다. 예시로 식품 물가 지수의 Basket 안엔 음식만 들어가있다고 보면 된다.
+        
 
 
 
 ***
 ### 한국의 최저임금이 OECD의 다른 나라와 비교하면 어떨까?
-OECD 최저시급 데이터가 있지만, 각 나라의 물가를 반영하지 않기 때문에 환율과 구매력 평가(이하 PPP) 데이터를 사용하여 비교했다.
+OECD별 최저 시급 데이터가 있지만, 각 나라의 물가가 반영이 안 된 지표이기에  환율과 PPP 데이터를 사용하였다. * **다른 나라와 한국의 실질 최저 임금을 비교하기 위해서 (환율/PPP)를 변환 계수로 사용해 최저시급 (달러)에 곱하여, 각 나라 간 비교할 수 있는 실질 임금 지표를 만들었다.**
 
-**한국과 다른 나라들의 실질 최저임금을 비교하기 위해 환율과 PPP를 변환 계수로 사용하여 각 나라의 최저시급(달러)에 곱함으로써, 서로 비교할 수 있는 실질 임금 지표를 만들었다.**
+
+**
 
 ### PPP란?
 **PPP는 구매력 평가라는 뜻으로, 실질 구매력을 나타내는 지표이다.**
 **예를 들어 한국의 dollar PPP는 미국에서 1달러를 가지고 살 수 있는 상품을 한국에서 살 때 드는 금액으로 정의할 수 있다.**
-PPP는 환율과는 달리 물가 수준을 반영하기 때문에, 동일한 금액으로 각국에서 얼마나 많은 상품과 서비스를 구매할 수 있는지를 비교할 수 있다. 따라서 PPP를 사용하면 각국의 실질 구매력을 고려한 임금 비교가 가능하다.
+예를 들어 환율이 1300이라면 미국에서 1달러를 가지고 살 수 있는 basket을 한국에서 살 때는 1300원이 든다는 뜻이지만, PPP가 800이라면 각 국가의 비교시, 미국에서 1달러를 가지고 살 수 있는 basket을 한국에서 살 때는 실질적으로 800원이 든다는 듯이다.
+
 
 ## OECD 국가 별 최저시급
 * 칼럼 확인
@@ -254,7 +109,7 @@ oecd.head()
 ```
 
 
-* **각 나라의 물가 수준과 환율을 이용하여 달러로 변환한 실질 최저 시급 도출**
+* **다른 나라와 한국의 실질 최저 임금을 비교하기 위해서 (환율/PPP)를 변환 계수로 사용해 최저시급 (달러)에 곱하여, 각 나라 간 비교할 수 있는 실질 임금 지표를 만들었다.**
 
 * 환율/ PPP 열 추가
 ```{python}

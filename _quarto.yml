@@ -8,7 +8,12 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd 
-
+#      - href: CPI.qmd
+#        text: CPI
+#      - href: OECD.qmd
+#        text: OECD
+#      - href: Conclusion.qmd
+#        text: Conclusion        
 format:
   html:
     theme: cosmo
