@@ -2,7 +2,7 @@ project:
   type: website
   output-dir: docs 
 website:
-  title: "avd"
+  title: "최저 임금 데이터 분석"
   navbar:
     left:
       - href: index.qmd
